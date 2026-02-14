@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Janggi AI</title>
+    <link rel="manifest" href="/static/manifest.json" />
+    <meta name="theme-color" content="#b58335" />
+    <link rel="icon" href="/static/icons/icon.svg" />
+    <link rel="apple-touch-icon" href="/static/icons/icon.svg" />
+    <link rel="stylesheet" href="/static/ui.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="hero">
+        <div class="title">
+          <p class="eyebrow">Janggi AI Playground</p>
+          <h1>Human vs AI</h1>
+          <p class="sub">Click a piece, then a destination. The server will reply with the AI move.</p>
+        </div>
+        <div class="status">
+          <div id="turn">Turn: -</div>
+          <div id="message">Ready.</div>
+        </div>
+      </header>
+
+      <section class="board-wrap">
+        <div class="board-frame">
+          <div id="board" class="board"></div>
+          <div class="palace palace-top"></div>
+          <div class="palace palace-bottom"></div>
+          <div class="coords files-top">
+            <span>a</span><span>b</span><span>c</span><span>d</span><span>e</span><span>f</span><span>g</span><span>h</span><span>i</span>
+          </div>
+          <div class="coords files-bottom">
+            <span>a</span><span>b</span><span>c</span><span>d</span><span>e</span><span>f</span><span>g</span><span>h</span><span>i</span>
+          </div>
+          <div class="coords ranks-left">
+            <span>10</span><span>9</span><span>8</span><span>7</span><span>6</span><span>5</span><span>4</span><span>3</span><span>2</span><span>1</span>
+          </div>
+          <div class="coords ranks-right">
+            <span>10</span><span>9</span><span>8</span><span>7</span><span>6</span><span>5</span><span>4</span><span>3</span><span>2</span><span>1</span>
+          </div>
+          <div class="river">
+            <span>楚河</span>
+            <span>漢界</span>
+          </div>
+        </div>
+        <div class="controls">
+          <button id="reset" class="btn">Reset Board</button>
+          <button id="refresh" class="btn ghost">Refresh State</button>
+        </div>
+      </section>
+
+      <section class="log">
+        <h2>Moves</h2>
+        <div id="moves" class="moves"></div>
+      </section>
+
+      <section class="ai-panel">
+        <h2>AI Thinking</h2>
+        <div class="ai-status">
+          <div id="ai-stage">Idle</div>
+          <div id="ai-meter" class="meter">
+            <span></span>
+          </div>
+        </div>
+        <div class="ai-steps">
+          <div class="step">
+            <span class="label">Policy (딥러닝)</span>
+            <span id="ai-policy">-</span>
+          </div>
+          <div class="step">
+            <span class="label">Value (머신러닝)</span>
+            <span id="ai-value">-</span>
+          </div>
+          <div class="step">
+            <span class="label">MCTS 시뮬레이션</span>
+            <span id="ai-mcts">-</span>
+          </div>
+          <div class="step">
+            <span class="label">후보 수</span>
+            <span id="ai-candidates">-</span>
+          </div>
+          <div class="step">
+            <span class="label">평가한 수</span>
+            <span id="ai-evaluated">-</span>
+          </div>
+          <div class="step">
+            <span class="label">최고 점수</span>
+            <span id="ai-best">-</span>
+          </div>
+        </div>
+        <div class="ai-training">
+          <div class="step">
+            <span class="label">학습 상태</span>
+            <span id="train-status">-</span>
+          </div>
+          <div class="step">
+            <span class="label">학습 스텝</span>
+            <span id="train-step">-</span>
+          </div>
+          <div class="step">
+            <span class="label">Loss</span>
+            <span id="train-loss">-</span>
+          </div>
+          <button id="train-start" class="btn ghost">Start Training</button>
+          <div class="step">
+            <span class="label">목표 Loss</span>
+            <input id="target-loss" class="loss-input" type="number" step="0.01" min="0" placeholder="예: 2.5" />
+          </div>
+          <button id="auto-train" class="btn">Auto Train: Off</button>
+          <div class="step">
+            <span class="label">데이터셋</span>
+            <span id="dataset-count">-</span>
+          </div>
+          <div class="controls">
+            <button id="save-data" class="btn ghost">Save Data</button>
+            <button id="load-data" class="btn ghost">Load Data</button>
+          </div>
+        </div>
+        <div class="ai-dataset-graph">
+          <div class="step">
+            <span class="label">데이터셋 추이</span>
+            <span id="dataset-latest">-</span>
+          </div>
+          <canvas id="dataset-chart" width="520" height="120"></canvas>
+        </div>
+        <div class="ai-actions">
+          <button id="run-smart-train" class="btn">Smart Train (Auto)</button>
+          <div class="ai-actions-note">KIF 로드 → 자가대국 생성 → 자동 학습</div>
+        </div>
+        <div class="ai-trace">
+          <h3>Search Trace</h3>
+          <div id="trace-list" class="trace-list"></div>
+          <h3>Training Trace</h3>
+          <div id="train-trace" class="trace-list"></div>
+        </div>
+      </section>
+    </main>
+
+    <script src="/static/ui.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/static/sw.js");
+      }
+    </script>
+  </body>
+</html>

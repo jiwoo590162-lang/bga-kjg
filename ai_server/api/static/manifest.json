@@ -1,0 +1,15 @@
+{
+  "name": "Janggi AI",
+  "short_name": "Janggi AI",
+  "start_url": "/ui",
+  "display": "standalone",
+  "background_color": "#f3e6c8",
+  "theme_color": "#b58335",
+  "icons": [
+    {
+      "src": "/static/icons/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
